@@ -1,4 +1,51 @@
 ```
-az login
-az account set --subscription xxxx
+source .env
 ```
+
+```
+az login --tenant $ENTRA_TENANT_ID
+az account set --subscription $AZURE_SUBSCRIPTION_ID
+```
+
+```
+RESOURCE_GROUP=rg-javascript-calling-api
+az group create --name $RESOURCE_GROUP --location japaneast
+```
+
+```
+az staticwebapp create --name my-first-static-web-app --resource-group $RESOURCE_GROUP --source https://github.com/rukasakurai/javascript-calling-api --location westus2 --branch main --login-with-github
+```
+
+- Created and Azure Function from the Portal (should maybe do this from the CLI in the future)
+
+helloFunction/index.js:
+```
+module.exports = async function (context, req) {
+    context.res = {
+        // status: 200, /* Defaults to 200 */
+        body: "hello"
+    };
+};
+```
+
+helloFunction/function.json:
+```
+{
+    "bindings": [
+        {
+            "authLevel": "anonymous",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req",
+            "methods": ["get"]
+        },
+        {
+            "type": "http",
+            "direction": "out",
+            "name": "res"
+        }
+    ]
+}
+```
+
+- Linked the Azure Function from the Azure Static Web Apps GUI
