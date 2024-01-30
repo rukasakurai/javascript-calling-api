@@ -1,0 +1,7 @@
+{
+    "name": "My Project",
+    "image": "mcr.microsoft.com/devcontainers/universal:linux",
+    "features": {
+        "ghcr.io/devcontainers/features/azure-cli:1.0.8": {}
+    }
+}
